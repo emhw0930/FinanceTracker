@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./pages/Home"; // ✅ Import Home page
+import Home from "./pages/Home";
 import FinancialReport from "./pages/FinancialReport";
 import SpendingSummaryPage from "./pages/SpendingSummaryPage";
 import "./styles.css";
@@ -26,11 +26,14 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <Router basename="/FinanceTracker"> {/* ✅ Fix for GitHub Pages */}
       <div className="container">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home transactions={transactions} addTransaction={addTransaction} deleteTransaction={deleteTransaction} />}/>
+          <Route 
+            path="/" 
+            element={<Home transactions={transactions} addTransaction={addTransaction} deleteTransaction={deleteTransaction} />}
+          />
           <Route path="/report" element={<FinancialReport transactions={transactions} />} />
           <Route path="/spending-summary" element={<SpendingSummaryPage transactions={transactions} />} />
         </Routes>
