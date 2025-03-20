@@ -30,10 +30,7 @@ const App = () => {
       <div className="container">
         <Navbar />
         <Routes>
-          <Route 
-            path="/" 
-            element={<Home transactions={transactions} addTransaction={addTransaction} deleteTransaction={deleteTransaction} />}
-          />
+          <Route path="/" element={<Home transactions={transactions} addTransaction={addTransaction} deleteTransaction={deleteTransaction} />}/>
           <Route path="/report" element={<FinancialReport transactions={transactions} />} />
           <Route path="/spending-summary" element={<SpendingSummaryPage transactions={transactions} />} />
         </Routes>
