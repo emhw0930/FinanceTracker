@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import TransactionList from "./components/TransactionList";
-import TransactionForm from "./components/TransactionForm";
-import FinancialReport from "./pages/FinancialReport"; // ✅ Pages folder
-import SpendingSummaryPage from "./pages/SpendingSummaryPage"; // ✅ Pages folder
+import Home from "./pages/Home"; // ✅ Import Home page
+import FinancialReport from "./pages/FinancialReport";
+import SpendingSummaryPage from "./pages/SpendingSummaryPage";
 import "./styles.css";
 
 const App = () => {
@@ -16,9 +15,8 @@ const App = () => {
   }, []);
 
   const addTransaction = (newTransaction) => {
-    const updatedTransactions = [newTransaction, ...transactions];
-    setTransactions(updatedTransactions);
-    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
+    setTransactions([...transactions, newTransaction]);
+    localStorage.setItem("transactions", JSON.stringify([...transactions, newTransaction]));
   };
 
   const deleteTransaction = (index) => {
@@ -32,18 +30,9 @@ const App = () => {
       <div className="container">
         <Navbar />
         <Routes>
-          <Route 
-            path="/" 
-            element={
-              <div>
-                <h1>💰 Personal Finance Tracker</h1>
-                <TransactionForm addTransaction={addTransaction} />
-                <TransactionList transactions={transactions} deleteTransaction={deleteTransaction} />
-              </div>
-            } 
-          />
+          <Route path="/" element={<Home transactions={transactions} addTransaction={addTransaction} deleteTransaction={deleteTransaction} />}/>
           <Route path="/report" element={<FinancialReport transactions={transactions} />} />
-          <Route path="/spending-summary" element={<SpendingSummaryPage transactions={transactions} />} /> 
+          <Route path="/spending-summary" element={<SpendingSummaryPage transactions={transactions} />} />
         </Routes>
       </div>
     </Router>
