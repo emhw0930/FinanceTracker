@@ -7,6 +7,8 @@ const Home = ({ transactions, addTransaction, deleteTransaction }) => {
   const location = useLocation();
   const filter = location.state?.filter;
   const category = location.state?.category;
+  const period = location.state?.period;
+  const startDate = location.state?.startDate;
 
   // Filter transactions based on the filter type
   const filteredTransactions = filter
@@ -14,6 +16,10 @@ const Home = ({ transactions, addTransaction, deleteTransaction }) => {
         if (filter === 'income') return transaction.amount > 0;
         if (filter === 'expenses') return transaction.amount < 0;
         if (filter === 'category') return transaction.category === category;
+        if (filter === 'time_period') {
+          const transactionDate = new Date(transaction.date);
+          return transactionDate >= new Date(startDate) && transaction.amount < 0;
+        }
         return true;
       })
     : transactions;
@@ -36,6 +42,21 @@ const Home = ({ transactions, addTransaction, deleteTransaction }) => {
       }[category] || "📌";
       
       return `${categoryEmoji} ${category.charAt(0).toUpperCase() + category.slice(1)} Transactions`;
+    }
+    if (filter === 'time_period') {
+      const periodEmoji = {
+        week: "📅",
+        month: "📅",
+        year: "📅"
+      }[period];
+      
+      const periodText = {
+        week: "This Week's",
+        month: "This Month's",
+        year: "This Year's"
+      }[period];
+      
+      return `${periodEmoji} ${periodText} Transactions`;
     }
     return '💰 Personal Finance Tracker';
   };

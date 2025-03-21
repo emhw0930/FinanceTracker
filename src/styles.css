@@ -79,7 +79,7 @@ body {
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0px;
   padding: 20px;
   height: 100%;
   width: 100%;
@@ -180,7 +180,7 @@ button:hover {
 .transaction-list {
   background: linear-gradient(135deg, #f6f9fc, #ffffff);
   padding: 28px;
-  border-radius: 16px 16px 0 0;
+  border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
   margin-top: 0;
@@ -189,7 +189,6 @@ button:hover {
   box-sizing: border-box;
   max-height: none;
   overflow-y: auto;
-  transition: all 0.3s ease;
   position: relative;
 }
 
@@ -199,10 +198,41 @@ button:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
+  padding: 32px;
+  background: white;
+  z-index: 9999;
+  border: none;
   border-radius: 0;
-  padding: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.transaction-list.exiting-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 32px;
+}
+
+.transaction-list.fullscreen .transaction-list-header {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 0 0 16px 0;
+  margin: 0 0 16px 0;
+  z-index: 10000;
+}
+
+body.fullscreen-active {
+  overflow: hidden;
 }
 
 .transaction-list-header {
@@ -228,7 +258,6 @@ button:hover {
   padding: 8px;
   margin: 0;
   color: #4299e1;
-  transition: all 0.2s;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -239,8 +268,7 @@ button:hover {
 
 .fullscreen-btn:hover {
   background: rgba(66, 153, 225, 0.1);
-  transform: none;
-  box-shadow: none;
+  cursor: pointer;
 }
 
 .fullscreen-btn svg {
@@ -272,11 +300,9 @@ button:hover {
   border-radius: 12px;
   margin: 8px 0;
   border: 1px solid #e2e8f0;
-  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .transaction-item:hover {
-  transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -379,17 +405,13 @@ button:hover {
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 
 .summary-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-}
-
-.summary-card[style*="cursor: pointer"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .summary-card[style*="cursor: pointer"] {
@@ -410,6 +432,11 @@ button:hover {
 
 .summary-card[style*="cursor: pointer"]:hover::after {
   opacity: 1;
+}
+
+.summary-card[style*="cursor: pointer"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .summary-card h3 {
@@ -485,11 +512,37 @@ button:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card[style*="cursor: pointer"] {
+  position: relative;
+}
+
+.stat-card[style*="cursor: pointer"]::after {
+  content: "Click to view transactions";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #718096;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.stat-card[style*="cursor: pointer"]:hover::after {
+  opacity: 1;
+}
+
+.stat-card[style*="cursor: pointer"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .stat-card h3 {
@@ -501,33 +554,23 @@ button:hover {
   padding-bottom: 8px;
 }
 
-/* Update stat-value styles for spending summary */
-.spending-stats .stat-value {
+.stat-card .amount {
   font-size: 32px;
   font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.stat-card .amount.positive {
+  color: #38a169;
+}
+
+.stat-card .amount.negative {
   color: #e53e3e;
-  margin: 0;
-  display: flex;
-  align-items: baseline;
 }
 
-.spending-stats .stat-value .currency {
-  font-size: 20px;
-  margin-right: 4px;
-  color: #718096;
-}
-
-/* Keep the original stat-value styles for other uses */
-.stat-value {
-  font-size: 32px;
-  font-weight: 700;
-  color: #4299e1;
-  margin: 0;
-  display: flex;
-  align-items: baseline;
-}
-
-.stat-value .currency {
+.stat-card .currency {
   font-size: 20px;
   margin-right: 4px;
   color: #718096;
@@ -641,12 +684,30 @@ button:hover {
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
 }
 
 .category-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.category-card .stat-value.positive {
+  color: #38a169;
+  transition: color 0.2s ease;
+}
+
+.category-card .stat-value.negative {
+  color: #e53e3e;
+  transition: color 0.2s ease;
+}
+
+.category-card:hover .stat-value.positive {
+  color: rgba(56, 161, 105, 0.6) !important;
+}
+
+.category-card:hover .stat-value.negative {
+  color: rgba(229, 62, 62, 0.6) !important;
 }
 
 .category-header {

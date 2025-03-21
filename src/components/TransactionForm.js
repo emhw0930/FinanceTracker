@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 
 const TransactionForm = ({ addTransaction }) => {
   const getCurrentDate = () => {
@@ -26,71 +26,6 @@ const TransactionForm = ({ addTransaction }) => {
     { value: "other", label: "📌 Other" }
   ];
 
-  // Keyword mappings for automatic category suggestion
-  const categoryKeywords = {
-    food: [
-      "restaurant", "food", "grocery", "dinner", "lunch", "breakfast",
-      "cafe", "coffee", "takeout", "meal", "snack", "drink",
-      "burger", "pizza", "sushi", "Wee", "supermarket"
-    ],
-    transportation: [
-      "gas", "fuel", "parking", "uber", "lyft", "taxi", "bus",
-      "train", "subway", "metro", "car", "vehicle", "maintenance",
-      "repair", "oil change", "tire"
-    ],
-    shopping: [
-      "amazon", "walmart", "target", "store", "mall", "clothes",
-      "shoes", "clothing", "electronics", "phone", "computer",
-      "laptop", "accessory", "gift"
-    ],
-    entertainment: [
-      "movie", "theatre", "concert", "show", "game", "netflix",
-      "spotify", "music", "subscription", "disney+", "hulu",
-      "ticket", "event", "festival"
-    ],
-    utilities: [
-      "rent", "electricity", "water", "gas bill", "internet",
-      "phone bill", "wifi", "utility", "cable", "mortgage",
-      "insurance", "maintenance"
-    ],
-    healthcare: [
-      "doctor", "medical", "hospital", "pharmacy", "medicine",
-      "dental", "dentist", "health", "clinic", "prescription",
-      "therapy", "insurance"
-    ],
-    salary: [
-      "salary", "paycheck", "wage", "income", "payment",
-      "bonus", "commission", "overtime", "reimbursement"
-    ],
-    investment: [
-      "stock", "bond", "dividend", "investment", "crypto",
-      "bitcoin", "eth", "mutual fund", "trading", "interest",
-      "return", "profit"
-    ]
-  };
-
-  // Function to suggest category based on transaction name
-  const suggestCategory = useCallback((transactionName) => {
-    const lowercaseName = transactionName.toLowerCase();
-    
-    // Check each category's keywords
-    for (const [category, keywords] of Object.entries(categoryKeywords)) {
-      if (keywords.some(keyword => lowercaseName.includes(keyword.toLowerCase()))) {
-        return category;
-      }
-    }
-    
-    return "other"; // Default category if no match found
-  }, [categoryKeywords]);
-
-  // Update category when transaction name changes
-  useEffect(() => {
-    if (name.trim()) {
-      const suggestedCategory = suggestCategory(name);
-      setCategory(suggestedCategory);
-    }
-  }, [name, suggestCategory]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -110,7 +45,6 @@ const TransactionForm = ({ addTransaction }) => {
     setName("");
     setAmount("");
     setDate(getCurrentDate()); // Reset to today's date after submission
-    setCategory("other");
   };
 
   return (

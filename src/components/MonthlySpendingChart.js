@@ -6,7 +6,14 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const MonthlySpendingChart = ({ transactions }) => {
   if (!transactions || transactions.length === 0) {
-    return <div className="chart-container">No spending data available.</div>;
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
+        <h2 style={{ marginBottom: '20px' }}>Monthly Spending</h2>
+        <div style={{ flex: '1', minHeight: '0', width: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <p style={{ color: '#718096', fontSize: '16px' }}>No spending data available.</p>
+        </div>
+      </div>
+    );
   }
 
   const currentYear = new Date().getFullYear();
@@ -15,6 +22,7 @@ const MonthlySpendingChart = ({ transactions }) => {
   transactions.forEach((transaction) => {
     if (transaction.date) {
       const date = new Date(transaction.date);
+      
       if (date.getFullYear() === currentYear && transaction.amount < 0) {
         const monthIndex = date.getMonth();
         monthlySpending[monthIndex] += Math.abs(transaction.amount);
@@ -57,7 +65,12 @@ const MonthlySpendingChart = ({ transactions }) => {
         bodyFont: {
           size: 13
         },
-        displayColors: false
+        displayColors: false,
+        callbacks: {
+          label: function(context) {
+            return `$${context.raw.toFixed(2)}`;
+          }
+        }
       }
     },
     scales: {
@@ -69,6 +82,9 @@ const MonthlySpendingChart = ({ transactions }) => {
         ticks: {
           font: {
             size: 12
+          },
+          callback: function(value) {
+            return '$' + value.toFixed(2);
           }
         }
       },

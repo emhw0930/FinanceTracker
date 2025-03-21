@@ -15,7 +15,7 @@ const FinancialReport = ({ transactions }) => {
   if (!transactions || transactions.length === 0) {
     return (
       <div className="financial-report">
-        <h1>Financial Report</h1>
+        <h1>📈 Financial Report</h1>
         <div className="summary-cards">
           <div className="summary-card" onClick={() => handleFilterClick('income')} style={{ cursor: 'pointer' }}>
             <h3>Total Income</h3>
@@ -41,7 +41,7 @@ const FinancialReport = ({ transactions }) => {
         </div>
         <div className="chart-container">
           <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
-            <h2 style={{ marginBottom: '20px' }}>Monthly Overview</h2>
+            <h2 style={{ marginBottom: '20px' }}>Total Income & Expenses</h2>
             <div style={{ flex: '1', minHeight: '0', width: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <p style={{ color: '#718096', fontSize: '16px' }}>No spending data available.</p>
             </div>
@@ -62,45 +62,13 @@ const FinancialReport = ({ transactions }) => {
 
   const balance = totalIncome + totalExpenses; // Expenses are negative
 
-  // Group transactions by month
-  const monthlyData = transactions.reduce((acc, transaction) => {
-    const date = new Date(transaction.date);
-    const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-    
-    if (!acc[monthKey]) {
-      acc[monthKey] = { income: 0, expenses: 0 };
-    }
-    
-    if (transaction.amount > 0) {
-      acc[monthKey].income += transaction.amount;
-    } else {
-      acc[monthKey].expenses += Math.abs(transaction.amount);
-    }
-    
-    return acc;
-  }, {});
-
-  // Sort months and prepare chart data
-  const sortedMonths = Object.keys(monthlyData).sort();
-  const monthLabels = sortedMonths.map(month => {
-    const [year, monthNum] = month.split('-');
-    return `${new Date(year, monthNum - 1).toLocaleString('default', { month: 'short' })} ${year}`;
-  });
-
   // Chart Data
   const data = {
-    labels: monthLabels,
+    labels: ["Total Income", "Total Expenses"],
     datasets: [
       {
-        label: "Income",
-        data: sortedMonths.map(month => monthlyData[month].income),
-        backgroundColor: "#38a169",
-        borderRadius: 6,
-      },
-      {
-        label: "Expenses",
-        data: sortedMonths.map(month => monthlyData[month].expenses),
-        backgroundColor: "#e53e3e",
+        data: [totalIncome, Math.abs(totalExpenses)],
+        backgroundColor: ["#38a169", "#e53e3e"],
         borderRadius: 6,
       }
     ],
@@ -111,13 +79,7 @@ const FinancialReport = ({ transactions }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
-        labels: {
-          font: {
-            size: 14,
-            weight: '500'
-          }
-        }
+        display: false
       },
       tooltip: {
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -128,6 +90,11 @@ const FinancialReport = ({ transactions }) => {
         },
         bodyFont: {
           size: 13
+        },
+        callbacks: {
+          label: function(context) {
+            return '$' + context.raw.toFixed(2);
+          }
         }
       }
     },
@@ -197,7 +164,7 @@ const FinancialReport = ({ transactions }) => {
       </div>
       <div className="chart-container">
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
-          <h2 style={{ marginBottom: '20px' }}>Monthly Overview</h2>
+          <h2 style={{ marginBottom: '20px' }}>Total Income & Expenses</h2>
           <div style={{ flex: '1', minHeight: '0', width: '100%', position: 'relative' }}>
             <Bar data={data} options={options} />
           </div>

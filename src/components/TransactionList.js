@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const TransactionList = ({ transactions, deleteTransaction }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+    if (isFullscreen) {
+      setIsFullscreen(false);
+      document.body.classList.remove('fullscreen-active');
+    } else {
+      setIsFullscreen(true);
+      document.body.classList.add('fullscreen-active');
+    }
   };
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('fullscreen-active');
+    };
+  }, []);
 
   const getCategoryEmoji = (category) => {
     const categories = {

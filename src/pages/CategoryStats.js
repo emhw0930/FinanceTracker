@@ -169,8 +169,12 @@ const CategoryStats = ({ transactions }) => {
       <div className="chart-container">
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
           <h2 style={{ marginBottom: '20px' }}>Income vs Expenses by Category</h2>
-          <div style={{ flex: '1', minHeight: '0', width: '100%', position: 'relative' }}>
-            <Bar data={chartData} options={chartOptions} />
+          <div style={{ flex: '1', minHeight: '0', width: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {transactions.length === 0 ? (
+              <p style={{ color: '#718096', fontSize: '16px' }}>No spending data available.</p>
+            ) : (
+              <Bar data={chartData} options={chartOptions} />
+            )}
           </div>
         </div>
       </div>
