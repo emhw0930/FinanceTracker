@@ -36,11 +36,26 @@ body {
 .navbar {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #4299e1, #3182ce);
-  padding: 20px;
-  min-width: 200px;
+  background: linear-gradient(135deg, #1a365d, #2c5282);
+  padding: 24px 20px;
+  min-width: 240px;
   border-radius: 0;
   height: 100%;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-header {
+  padding: 0 12px 24px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 24px;
+}
+
+.navbar-header h1 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .navbar ul {
@@ -49,7 +64,7 @@ body {
   flex-direction: column;
   padding: 0;
   margin: 0;
-  gap: 12px;
+  gap: 8px;
 }
 
 .navbar li {
@@ -59,20 +74,40 @@ body {
 
 .navbar a {
   text-decoration: none;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  font-weight: 500;
   padding: 12px 16px;
   border-radius: 8px;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
 }
 
 .navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.navbar a.active {
   background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-weight: 600;
+}
+
+.nav-icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.nav-text {
+  flex: 1;
 }
 
 /* Main Content */
