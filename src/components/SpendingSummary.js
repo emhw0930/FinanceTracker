@@ -22,11 +22,29 @@ const SpendingSummary = ({ transactions }) => {
     .reduce((total, t) => total + Math.abs(t.amount), 0);
 
   return (
-    <div className="spending-summary">
-      <p><strong>Weekly Spending:</strong> ${weeklySpending.toFixed(2)}</p>
-      <p><strong>Monthly Spending:</strong> ${monthlySpending.toFixed(2)}</p>
-      <p><strong>Yearly Spending:</strong> ${yearlySpending.toFixed(2)}</p>
-    </div>
+    <>
+      <div className="stat-card">
+        <h3>Weekly Spending</h3>
+        <p className="stat-value">
+          <span className="currency">$</span>
+          {weeklySpending.toFixed(2)}
+        </p>
+      </div>
+      <div className="stat-card">
+        <h3>Monthly Spending</h3>
+        <p className="stat-value">
+          <span className="currency">$</span>
+          {monthlySpending.toFixed(2)}
+        </p>
+      </div>
+      <div className="stat-card">
+        <h3>Yearly Spending</h3>
+        <p className="stat-value">
+          <span className="currency">$</span>
+          {yearlySpending.toFixed(2)}
+        </p>
+      </div>
+    </>
   );
 };
 

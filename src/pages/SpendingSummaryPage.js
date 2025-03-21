@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import SpendingSummary from "../components/SpendingSummary";
 import MonthlySpendingChart from "../components/MonthlySpendingChart";
 
@@ -12,18 +11,13 @@ const SpendingSummaryPage = ({ transactions }) => {
 
   return (
     <div className="spending-summary-page">
-      <h2>Spending Summary</h2>
-
-      {/* Spending Summary */}
-      <SpendingSummary transactions={formattedTransactions} />
-
-      {/* Monthly Spending Bar Graph */}
-      <MonthlySpendingChart transactions={formattedTransactions} />
-
-      {/* Back to Home Button */}
-      <Link to="/" style={{ marginTop: "40px", textDecoration: "none", color: "#007bff" }}>
-        ← Back to Home
-      </Link>
+      <h1>📅 Spending Summary</h1>
+      <div className="spending-stats">
+        <SpendingSummary transactions={formattedTransactions} />
+      </div>
+      <div className="chart-container">
+        <MonthlySpendingChart transactions={formattedTransactions} />
+      </div>
     </div>
   );
 };

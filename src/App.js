@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import FinancialReport from "./pages/FinancialReport";
 import SpendingSummaryPage from "./pages/SpendingSummaryPage";
+import CategoryStats from "./pages/CategoryStats";
 import "./styles.css";
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/" element={<Home transactions={transactions} addTransaction={addTransaction} deleteTransaction={deleteTransaction} />}/>
           <Route path="/report" element={<FinancialReport transactions={transactions} />} />
           <Route path="/spending-summary" element={<SpendingSummaryPage transactions={transactions} />} />
+          <Route path="/category-stats" element={<CategoryStats transactions={transactions} />} />
         </Routes>
       </div>
     </Router>
