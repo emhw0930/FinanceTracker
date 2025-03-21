@@ -180,7 +180,7 @@ button:hover {
 .transaction-list {
   background: linear-gradient(135deg, #f6f9fc, #ffffff);
   padding: 28px;
-  border-radius: 16px;
+  border-radius: 16px 16px 0 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
   margin-top: 0;
@@ -577,7 +577,7 @@ button:hover {
 .category-stats-page {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   padding: 20px;
   height: 100%;
   width: 100%;
@@ -586,16 +586,59 @@ button:hover {
 
 .category-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  flex-shrink: 0;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
   width: 100%;
+  max-height: 45vh;
+  overflow-y: auto;
+  padding-right: 8px;
+  padding-top: 5px;
+}
+
+/* Add custom scrollbar for category cards */
+.category-cards::-webkit-scrollbar {
+  width: 8px;
+}
+
+.category-cards::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.category-cards::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+.category-cards::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+.category-stats-page .chart-container {
+  background: linear-gradient(135deg, #f6f9fc, #ffffff);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  height: 45vh;
+  min-height: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
+
+.category-stats-page .chart-container h2 {
+  margin-bottom: 12px;
+  font-size: 18px;
 }
 
 .category-card {
   background: linear-gradient(135deg, #f6f9fc, #ffffff);
-  padding: 24px;
-  border-radius: 16px;
+  padding: 16px;
+  border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid #e2e8f0;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -609,27 +652,27 @@ button:hover {
 .category-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 2px solid #e2e8f0;
 }
 
 .category-header .category-emoji {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .category-header h3 {
   margin: 0;
   color: #2d3748;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .category-details {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stat-row {
@@ -640,12 +683,12 @@ button:hover {
 
 .stat-label {
   color: #718096;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .stat-value {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   color: #2d3748;
 }
 
@@ -655,20 +698,4 @@ button:hover {
 
 .stat-value.negative {
   color: #e53e3e;
-}
-
-.category-stats-page .chart-container {
-  background: linear-gradient(135deg, #f6f9fc, #ffffff);
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
-  margin-top: 12px;
-  margin-bottom: 24px;
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
 }

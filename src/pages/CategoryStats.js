@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const CategoryStats = ({ transactions }) => {
+  const navigate = useNavigate();
   const [hoveredCategory, setHoveredCategory] = useState(null);
+
+  const handleCategoryClick = (category) => {
+    navigate('/', { state: { filter: 'category', category: category } });
+  };
 
   // Define categories with their emojis and labels
   const categories = [
@@ -121,7 +127,7 @@ const CategoryStats = ({ transactions }) => {
 
   return (
     <div className="category-stats-page">
-      <h1>📈 Category Statistics</h1>
+      <h1>📊 Category Statistics</h1>
       <div className="category-cards">
         {sortedStats.map(cat => (
           <div 
@@ -129,6 +135,9 @@ const CategoryStats = ({ transactions }) => {
             className="category-card"
             onMouseEnter={() => setHoveredCategory(cat.value)}
             onMouseLeave={() => setHoveredCategory(null)}
+            onClick={() => handleCategoryClick(cat.value)}
+            style={{ cursor: 'pointer' }}
+            title={`Click to view ${cat.label.toLowerCase()} transactions`}
           >
             <div className="category-header">
               <span className="category-emoji">{cat.emoji}</span>
